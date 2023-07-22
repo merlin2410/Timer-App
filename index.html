@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timer App</title>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+    <main class="main-container">
+        <h1 class="title">Timer App</h1>
+        <div class="set-timer">
+            <p>Set Time:</p>
+            <div class="time">
+                <input type="number" class="hour" id="hour-input" placeholder="hh">
+                <p>:</p>
+                <input type="number" class="minute" id="minute-input" placeholder="mm">
+                <p>:</p>
+                <input type="number" class="second" id="second-input" placeholder="ss">
+            </div>
+            <button class="set-button" id="set-button">Set</button>
+        </div>
+        
+        <h2>Active Timers</h2>
+        <div class="active-timers" id="active-timers">
+            
+            <div class="set-timer">
+                <p>Time Left:</p>
+                <div class="time">
+                    <input type="number" class="hour" id="hour" placeholder="hh">
+                    <p>:</p>
+                    <input type="number" class="minute" id="minute" placeholder="mm">
+                    <p>:</p>
+                    <input type="number" class="second" id="second" placeholder="ss">
+                </div>
+                <button class="set-button">Delete</button>
+            </div>
+            
+        </div>
+    </main>
+
+    <script src="scripts/script.js"></script>
+</body>
+</html>

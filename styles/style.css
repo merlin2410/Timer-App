@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Tektur:wght@400;500;600;700&display=swap');
+*{
+    font-family: 'Tektur', cursive;
+    background-color: black;
+    color: #35f8b7;
+}
+
+.main-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+}
+
+.set-timer{
+    display: flex;
+    width: 50%;
+    gap: 45px;
+    justify-content: center;
+    height: 75px;
+    align-items: center;
+    background-color: #34344a;
+    border-radius: 20px;
+}
+
+.set-timer p{
+    height: 40px;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    background-color: #34344a;
+    
+}
+
+.time{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    width: 55%;
+    align-items: center;
+    background-color: #34344a;
+}
+
+.time input{
+    width: 17%;
+    font-size: 30px;
+    height: 40px;
+    border: none;
+    background-color: #34344a;
+    text-align: right;
+    border: 1px solid #35f8b7;
+    border-radius: 10px;
+    text-decoration: underline;
+    
+}
+
+.set-button{
+    height: 40px;
+    background-color: yellow;
+    width: 15%;
+    border-radius: 20px;
+    color: darkgreen;
+    font-weight: bold;
+}
+
+.active-timers{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 60px;
+}

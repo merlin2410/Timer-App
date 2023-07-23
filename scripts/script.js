@@ -2,6 +2,8 @@ hourField = document.getElementById('hour-input');
 minuteField = document.getElementById('minute-input');
 secondField = document.getElementById('second-input');
 let count = 1;
+let timerList = [];
+
 
 
 document.getElementById('set-button').addEventListener('click',(event)=>{
@@ -26,6 +28,9 @@ document.getElementById('set-button').addEventListener('click',(event)=>{
 
 function createTimer(hour,minute,second){
     activeTimers = document.getElementById('active-timers');
+    if(timerList.length===0){
+        activeTimers.innerText = '';
+    }
     timer = document.createElement('div');
     timer.innerHTML =  `<p>Time Left:</p>
                         <div class="time">
@@ -35,35 +40,43 @@ function createTimer(hour,minute,second){
                             <p>:</p>
                             <input type="number" class="second" id="second" value = "${second}">
                         </div>
-                        <button class="set-button">Delete</button>`;
+                        <button class="set-button" id="deletetimer${count}">Delete</button>`;
     timer.className = 'set-timer';
     timer.id = 'timer'+count;
     count++;
     activeTimers.appendChild(timer);
-    startTimer.call(timer);
+    const myInterval = setInterval(startTimer,1000,timer);
+    let obj = {};
+    obj[timer.id] = myInterval;
+    timerList.push(obj);
+    
 }
 
-function startTimer(){
-    console.log(this);
-    hourQuery = '#'+this.id+' '+'#hour';
+function startTimer(timer){
+    
+    hourQuery = '#'+timer.id+' '+'#hour';
     hourElement = document.querySelector(hourQuery);
-    minuteQuery = '#'+this.id+' '+'#minute';
+    minuteQuery = '#'+timer.id+' '+'#minute';
     minuteElement = document.querySelector(minuteQuery);
-    secondQuery = '#'+this.id+' '+'#second';
+    secondQuery = '#'+timer.id+' '+'#second';
     secondElement = document.querySelector(secondQuery);
     hour = parseInt(hourElement.value);
     minute = parseInt(minuteElement.value);
     second = parseInt(secondElement.value)
 
-    setInterval(()=>{
-        console.log(typeof secondElement.value)
+    
+    
 
-        if(minute===0){
+    if(minute===0 && hour===0 && second===0){
+        stopTimer(timer.id);
+    }
+    else{
+        if(hour>0 && minute===0){
             minute = 59;
             hour--;
         }
         
-
+    
         if(second===0){
             second = 59;
             minute--;
@@ -71,31 +84,84 @@ function startTimer(){
         else{
             second--;
         }
-
+    
         if(hour<10){
             hourElement.value = '0'+hour;
         }
         else{
             hourElement.value = hour;
         }
-
+    
         if(minute<10){
             minuteElement.value = '0'+minute;
         }
         else{
             minuteElement.value = minute;
         }
-
+    
         if(second<10){
             secondElement.value = '0'+second;
         }
         else{
             secondElement.value = second;
+        }       
+    }
+    console.log('delete'+timer.id)
+    document.getElementById('delete'+timer.id).addEventListener('click',(event)=>{
+        let obj;
+        
+        for(let i of timerList){
+            if(i[timer.id]!==undefined){
+                obj = i;
+            }
+        }
+        console.log(timer.id);
+        myInterval = obj[timer.id];
+        clearInterval(myInterval);
+        
+        timer.remove();
+        timerList.splice(timerList.indexOf(obj),1);
+        if(timerList.length===0){
+            document.getElementById('active-timers').innerText = 'No Active Timers';
         }
         
-        
-    },1000);
-
-    console.log(hourElement)
+    })
 }
+
+function stopTimer(timerId){
+    let obj;
+    for(let i of timerList){
+        if(i[timerId]!==undefined){
+            obj = i;
+        }
+    }
+    myInterval = obj[timerId];
+    clearInterval(myInterval);
+    
+
+    var audio = new Audio('assets/alarm.mp3');
+    audio.play();
+    timer = document.getElementById(timerId);
+    console.log("to comare",timerId)
+    timer.innerHTML = `<p></p>
+                        <div class="time" style="font-size: 45px;">
+                            Time us Up!
+                        </div>
+                        <button class="set-button" id="stop${timerId}">Stop</button>`;
+    document.getElementById('stop'+timerId).addEventListener('click',(event)=>{
+        console.log("this is", timerId)
+        timer.remove();
+        audio.pause();
+        timerList.splice(timerList.indexOf(obj),1);
+        if(timerList.length===0){
+            document.getElementById('active-timers').innerText = 'No Active Timers';
+        }
+    })
+}
+
+
+
+
+
+
 
